@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+
+void push(char x) {
+    stack[++top] = x;
+}
+
+
+char pop() {
+    if (top == -1)
+        return '#';  // invalid
+    return stack[top--];
+}
+
+
+int isMatching(char open, char close) {
+    if (open == '(' && close == ')') return 1;
+    if (open == '{' && close == '}') return 1;
+    if (open == '[' && close == ']') return 1;
+    return 0;
+}
+
+int isBalanced(char exp[]) {
+    for (int i = 0; i < strlen(exp); i++) {
+        char ch = exp[i];
+
+        if (ch == '(' || ch == '{' || ch == '[')
+            push(ch);
+
+
+        else {
+            char popped = pop();
+
+            if (!isMatching(popped, ch))
+                return 0;
+        }
+    }
+
+    return (top == -1);
+}
+
+int main() {
+    char exp[MAX];
+
+
+    printf("Enter expression: ");
+    scanf("%s", exp);
+
+
+    printf("\nName: Lekhit Kalambe\n");
+    printf("PRN: 25070521204\n");
+    printf("Batch: 2025-2029\n");
+
+
+    if (isBalanced(exp))
+        printf("\nOutput: Balanced\n");
+    else
+        printf("\nOutput: Not Balanced\n");
+
+    return 0;
+}
